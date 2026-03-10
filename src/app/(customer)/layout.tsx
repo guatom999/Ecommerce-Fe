@@ -1,0 +1,19 @@
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { ProtectedRoute } from "@/components/layout/ProtectedRoute";
+
+export default function CustomerLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <div className="flex min-h-screen flex-col">
+            <Navbar />
+            <main className="flex-1">
+                <ProtectedRoute>{children}</ProtectedRoute>
+            </main>
+            <Footer />
+        </div>
+    );
+}
