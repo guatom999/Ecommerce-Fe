@@ -35,7 +35,7 @@ export default function CheckoutPage() {
             const order = await ordersApi.createOrder({
                 address: data.address,
                 contact: data.contact,
-                products: items.map(({ product, qty }) => ({ id: product.id, qty })),
+                products: items.map(({ product, qty }) => ({ product: { id: product.id, price: product.price }, qty })),
             });
             clear();
             toast.success("สั่งซื้อสำเร็จ!");

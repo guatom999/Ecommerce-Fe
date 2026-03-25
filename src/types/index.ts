@@ -95,7 +95,7 @@ export interface Order {
 export interface CreateOrderPayload {
   address: string;
   contact: string;
-  products: { id: string; qty: number }[];
+  products: { product: { id: string; price: number }; qty: number }[];
 }
 
 export interface UpdateOrderPayload {

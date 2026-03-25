@@ -6,8 +6,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "EcommerceGo — ร้านค้าออนไลน์",
-    description: "ช้อปสินค้าคุณภาพดีราคาถูกที่ EcommerceGo",
+    title: "AraiwaniShop — ร้านค้าออนไลน์",
+    description: "ช้อปสินค้าคุณภาพดีราคาถูกที่ AraiwaniShop",
 };
 
 export default function RootLayout({
