@@ -23,7 +23,7 @@ export default async function HomePage() {
             <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
                 <div className="mx-auto max-w-7xl px-4 py-20 text-center">
                     <h1 className="mb-4 text-4xl font-bold md:text-6xl">
-                        ยินดีต้อนรับสู่ EcommerceGo
+                        ยินดีต้อนรับสู่ AraiwaniShop
                     </h1>
                     <p className="mb-8 text-lg text-blue-100 md:text-xl">
                         ช้อปสินค้าคุณภาพดีราคาถูก จัดส่งรวดเร็ว

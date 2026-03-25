@@ -1,6 +1,6 @@
 import axios from "axios";
+import { useAuthStore } from "@/store/authStore";
 
-//มาอ่านด้วย
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
@@ -8,10 +8,10 @@ const api = axios.create({
   },
 });
 
-// Attach JWT on every request
+// Attach JWT on every request — อ่านจาก Zustand store โดยตรง
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("access_token");
+    const token = useAuthStore.getState().token?.access_token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -29,12 +29,16 @@ api.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
-        const refreshToken =
-          typeof window !== "undefined"
-            ? localStorage.getItem("refresh_token")
-            : null;
+        const { token: currentToken, user, setAuth, clearAuth } =
+          useAuthStore.getState();
 
-        if (!refreshToken) {
+        const refreshToken = currentToken?.refresh_token;
+
+        if (!refreshToken || !user) {
+          useAuthStore.getState().clearAuth();
+          if (typeof window !== "undefined") {
+            window.location.href = "/login";
+          }
           return Promise.reject(err);
         }
 
@@ -44,18 +48,14 @@ api.interceptors.response.use(
           { headers: { "x-api-key": process.env.NEXT_PUBLIC_API_KEY } },
         );
 
-        const newAccessToken = data.token.access_token;
-        const newRefreshToken = data.token.refresh_token;
+        // อัปเดต token ใน Zustand store (persist จะ sync localStorage ให้เอง)
+        setAuth(user, data.token);
 
-        localStorage.setItem("access_token", newAccessToken);
-        localStorage.setItem("refresh_token", newRefreshToken);
-
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        originalRequest.headers.Authorization = `Bearer ${data.token.access_token}`;
         return api(originalRequest);
       } catch {
+        useAuthStore.getState().clearAuth();
         if (typeof window !== "undefined") {
-          localStorage.removeItem("access_token");
-          localStorage.removeItem("refresh_token");
           window.location.href = "/login";
         }
         return Promise.reject(err);

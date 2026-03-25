@@ -35,22 +35,6 @@ export default function ProfilePage() {
                                 <p className="text-sm font-medium text-gray-900">{user.email}</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                            <Shield size={18} className="text-gray-400" />
-                            <div>
-                                <p className="text-xs text-gray-500">สิทธิ์การใช้งาน</p>
-                                <p className="text-sm font-medium text-gray-900">
-                                    {user.role_id === 2 ? "Admin (role_id: 2)" : "Customer (role_id: 1)"}
-                                </p>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <span className="text-gray-400 text-sm font-mono">ID</span>
-                            <div>
-                                <p className="text-xs text-gray-500">รหัสผู้ใช้</p>
-                                <p className="text-sm font-medium text-gray-900 font-mono">{user.id}</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </Card>

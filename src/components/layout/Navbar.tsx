@@ -4,20 +4,23 @@ import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
 import { useAuth } from "@/hooks/useAuth";
 import { ShoppingCart, User, LogOut, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function Navbar() {
     const { isAuthenticated, isAdmin, user } = useAuthStore();
     const totalItems = useCartStore((s) => s.totalItems)();
     const { signOut } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => setMounted(true), []);
 
     return (
         <nav className="sticky top-0 z-40 border-b border-gray-200 bg-white shadow-sm">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
                 {/* Logo */}
                 <Link href="/" className="text-xl font-bold text-blue-600">
-                    EcommerceGo
+                    AraiwaniShop
                 </Link>
 
                 {/* Desktop nav */}
@@ -42,7 +45,7 @@ export function Navbar() {
                     )}
                     <Link href="/cart" className="relative text-gray-600 hover:text-blue-600">
                         <ShoppingCart size={22} />
-                        {totalItems > 0 && (
+                        {mounted && totalItems > 0 && (
                             <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-white">
                                 {totalItems}
                             </span>
@@ -69,7 +72,7 @@ export function Navbar() {
                 <div className="flex items-center gap-3 md:hidden">
                     <Link href="/cart" className="relative text-gray-600">
                         <ShoppingCart size={22} />
-                        {totalItems > 0 && (
+                        {mounted && totalItems > 0 && (
                             <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-blue-600 text-xs text-white">
                                 {totalItems}
                             </span>
